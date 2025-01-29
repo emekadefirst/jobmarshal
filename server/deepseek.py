@@ -57,7 +57,7 @@ async def chat_completion(data: MessageBody):
         "Authorization": f"Bearer {deepseek_key}"
     }
     body = {
-        "model": "deepseek-chat",
+        "model": "deepseek-reasoner",
         "messages": [
           {"role": "system", "content": "You are a helpful assistant."},
           {"role": "user", "content": f"{data.text}"}
