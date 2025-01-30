@@ -7,14 +7,16 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# MongoDB connection URI
-uri = os.getenv("MONGODB_URI")
+from pymongo import MongoClient
 
-# Establish the connection
-client = MongoClient(uri, server_api=ServerApi("1"))
+uri = "mongodb+srv://jobmarshal:RfBMZZaOV5Avl2f0@cluster0.iat96.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-# Access the database and collection
-db = client.get_database("applicant")  # Specify your database name here
+client = MongoClient(uri, tls=True, tlsAllowInvalidCertificates=True)
+
+db = client["Apllicant"]
+print("✅ Connected to MongoDB successfully!")
+
+
 collection = db.applicants
 
 
