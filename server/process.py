@@ -11,19 +11,22 @@ def generate_interview_code():
     characters = string.ascii_uppercase + string.digits  
     return ''.join(random.choices(characters, k=15))
 
+
 @file.post("/applicant-form")
 async def upload_applicant(
-    fullname: str = Form(...),
+    firstname: str = Form(...),
+    lastname: str = Form(...),
     role: str = Form(...),
-    resume: UploadFile = File(...)
+    resume: UploadFile = File(...),
 ):
     try:
         file_content = await resume.read()
-        cloud_url = await upload_doc(file_content, f"{fullname}-RESUME")
-        result = await save(fullname, role, cloud_url, generate_interview_code())
+        cloud_url = await upload_doc(file_content, f"{firstname}{lastname}-RESUME")
+        result = await save(firstname, lastname, role, cloud_url, generate_interview_code())
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+
 
 @file.get("/applicants")
 async def get_all_applicants():

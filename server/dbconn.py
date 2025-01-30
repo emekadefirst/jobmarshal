@@ -8,22 +8,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # MongoDB connection URI
-uri = os.getenv("url")
+uri = os.getenv("MONGODB_URI")
 
 # Establish the connection
-client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, server_api=ServerApi("1"))
 
 # Access the database and collection
-db = client.get_database('your_database_name')  # Specify your database name here
+db = client.get_database("applicant")  # Specify your database name here
 collection = db.applicants
 
+
 # Save function
-async def save(fullname, role, cv_url, interview_code):
+async def save(firstname, lastname, role, cv_url, interview_code):
     applicant_data = {
-        "fullname": fullname,
+        "firstname": firstname,
+        "lastname": lastname,
         "role": role,
         "resume_url": cv_url,
-        "interview_code": interview_code
+        "interview_code": interview_code,
     }
     try:
         # Insert data into the 'applicants' collection
@@ -32,3 +34,6 @@ async def save(fullname, role, cv_url, interview_code):
     except Exception as e:
         return f"Error saving applicant data: {str(e)}"
 
+
+if __name__ == "__main__":
+    print(asyncio.run(save("victor", "chib", "dev", "https://hg.com", "AFSASFDED")))

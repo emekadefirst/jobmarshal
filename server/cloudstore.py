@@ -3,7 +3,6 @@ import asyncio
 import cloudinary
 import cloudinary.uploader
 from dotenv import load_dotenv
-from cloudinary.utils import cloudinary_url
 
 load_dotenv()
 
@@ -13,8 +12,6 @@ cloudinary.config(
     api_secret=os.getenv("API_SECRET"),
     secure=True,
 )
-
-
 
 async def upload_doc(file, name: str):
     try:
